@@ -6,5 +6,5 @@ steps:
   env:
   - 'NODE_ENV=production'
 - name: "gcr.io/cloud-builders/gcloud"
-  args: ["app", "deploy"]
+  args: ["app", "deploy", "--no-promote"]
 timeout: "1600s"
