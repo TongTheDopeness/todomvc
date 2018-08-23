@@ -10,6 +10,6 @@ steps:
   args:
     - -c
     - |
-      version=`echo $TAG_NAME | sed 's/\./_/g'`
+      version=`echo $TAG_NAME | sed 's/\./-/g'`
       gcloud app deploy --no-promote --version=$version
 timeout: "1600s"
