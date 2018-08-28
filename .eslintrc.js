@@ -2,17 +2,21 @@ module.exports = {
   root: true,
   parser: 'babel-eslint',
   parserOptions: {
-    sourceType: 'module'
+    sourceType: 'module',
+    parser: 'babel-eslint'    
   },
   env: {
     browser: true,
     node: true,
     mocha: true
   },
-  extends: 'standard',
+  extends: [
+    'plugin:vue/essential'
+  ],
   // required to lint *.vue files
   plugins: [
-    'html'
+    'html',
+    'vue'
   ],
   // add your custom rules here
   rules: {
