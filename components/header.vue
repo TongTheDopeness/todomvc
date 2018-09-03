@@ -13,6 +13,7 @@ export default {
   methods: {
     addTodo () {
       var value = this.todo && this.todo.trim()
+      console.log(value)
       if (value) {
         this.$store.dispatch('addTodo', { title: value, completed: this.$route.params.slug === 'completed' })
         this.todo = ''
