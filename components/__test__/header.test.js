@@ -51,5 +51,6 @@ describe('header.vue', () => {
       title: "hogehoge"      
     })
     expect(store.dispatch).toHaveBeenCalledWith('addTodo', expectedValue)
+    expect(wrapper.vm.todo).toBe('')
   })
 })
