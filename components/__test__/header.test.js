@@ -1,47 +1,50 @@
 import { shallowMount, createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
 import Header from '~/components/Header.vue'
+import merge from 'lodash.merge'
 
 const localVue = createLocalVue()
 localVue.use(Vuex)
 
-describe('header.vue', () => {
-  let storeOptions
-  let store
+function createStore(overrides) {
+  const defaultStoreConfig = {}
+  return new Vuex.Store(
+    merge(defaultStoreConfig, overrides)
+  )
+}
 
-  beforeEach(() => {
-    storeOptions = {}
-    store = new Vuex.Store(storeOptions)
-  })
+function createWrapper(overrides) {
+  const defaultMountingOptions = {
+    mocks: {}, 
+    localVue,
+    store: createStore()    
+  }
+  return shallowMount(Header, merge(defaultMountingOptions, overrides))
+}
+
+describe('header.vue', () => {
 
   it('テキストを入力し、エンターを押すとコンポーネントのaddTodoが呼び出される', () => {
-    const wrapper = shallowMount(Header, { 
-      mocks: {}, 
-      localVue,
-      store
-    })
-
+    const wrapper = createWrapper()
     wrapper.vm.addTodo = jest.fn()
     const input = wrapper.find('.new-todo')
-    input.element.value = 'Hoge'
+    input.setValue('Hoge')
     input.trigger('keyup.enter')
     expect(wrapper.vm.addTodo).toHaveBeenCalled()
   })
 
   it("dispatch('addTodo')が呼び出される", () => {
-    store.dispatch = jest.fn()
+    const store = createStore()
+    const mocks = {
+      $route: {
+        params: {
+          slug: 'completed'
+        }
+      }  
+    }
 
-    const wrapper = shallowMount(Header, { 
-      mocks: {
-        $route: {
-          params: {
-            slug: 'completed'
-          }
-        }        
-      }, 
-      localVue,
-      store
-    })
+    store.dispatch = jest.fn()
+    const wrapper = createWrapper({ mocks, store })
     
     let input = wrapper.find('.new-todo')
     input.setValue('hogehoge')

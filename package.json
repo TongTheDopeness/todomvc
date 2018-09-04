@@ -36,7 +36,8 @@
     "eslint-plugin-standard": "^2.0.1",
     "jest": "^23.5.0",
     "jest-vue-preprocessor": "^1.4.0",
-    "lodash.clonedeep": "^4.5.0"
+    "lodash.clonedeep": "^4.5.0",
+    "lodash.merge": "^4.6.1"
   },
   "jest": {
     "moduleNameMapper": {

@@ -1,59 +1,119 @@
 import { shallowMount, createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
 import Slug from '~/pages/_slug.vue'
+import merge from 'lodash.merge'
 
 const localVue = createLocalVue()
 localVue.use(Vuex)
 
-describe('_slug.vue', () => {
-  let storeOptions
-  let store
-
+function createStore(overrides) {
   let todos = [
     { title: 'one', completed: false },
     { title: 'two', completed: true }
   ]
-
-  beforeEach(() => {
-    storeOptions = {
-      getters: {
-        allTodos: jest.fn()
-      }
+  const defaultStoreConfig = {
+    getters: {
+      allTodos: () => todos
     }
-    store = new Vuex.Store(storeOptions)
-  })
+  }
+  return new Vuex.Store(
+    merge(defaultStoreConfig, overrides)
+  )
+}
+
+function createWrapper(overrides) {
+  const defaultMountingOptions = {
+    mocks: {
+      $route: {
+        params: {}
+      }      
+    },
+    localVue,
+    store: createStore()
+  }
+  return shallowMount(Slug, merge(defaultMountingOptions, overrides))
+}
+
+describe('_slug.vue', () => {
 
   it('render slug', () => {
-    storeOptions.getters.allTodos.mockReturnValue(todos)
-    const wrapper = shallowMount(Slug, {
-      mocks: {
-        $route: {
-          params: {}
-        }
-      }, 
-      localVue,
-      store      
-    })
-
+    const store = createStore({})
+    const wrapper = createWrapper({ store })
     const items = wrapper.findAll('li')
     expect(items).toHaveLength(2)
   })
 
   it('Mark all as complete', () => {
-    storeOptions.getters.allTodos.mockReturnValue(todos)
+    const store = createStore({})
     store.dispatch = jest.fn()
-
-    const wrapper = shallowMount(Slug, {
-      mocks: {
-        $route: {
-          params: {}
-        }
-      },
-      localVue,
-      store
-    })
-
+    const wrapper = createWrapper({ store })
     wrapper.find('.toggle').trigger('click')
     expect(store.dispatch).toHaveBeenCalledWith('allDone')
+  })
+
+  it('1個目のタスクをdoneにする', () => {
+    const store = createStore()
+    const wrapper = createWrapper({ store })
+    expect(wrapper.vm.todos[0].completed).toBeFalsy()    
+    let checkbox = wrapper.findAll('li').at(0).find('input[type="checkbox"]')    
+    checkbox.setChecked()
+    expect(wrapper.vm.todos[0].completed).toBeTruthy()
+  })
+
+  it('2個目のタスクを削除する', () => {
+    const store = createStore()
+    store.dispatch = jest.fn()
+    const wrapper = createWrapper({ store })
+    expect(wrapper.vm.todos).toHaveLength(2)
+
+    let task = wrapper.findAll('li').at(1)
+    task.find('.destroy').trigger('click')
+    const expectedData = expect.objectContaining({
+      completed: true,
+      title: 'two'
+    })
+    expect(store.dispatch).toHaveBeenCalledWith('removeTodo', expectedData)
+  })
+
+  it('1個目のタスクを編集する', () => {
+    const store = createStore()
+    const wrapper = createWrapper({ store })
+
+    let task = wrapper.findAll('li').at(0)
+    task.find('label').trigger('dbclick')
+    let editInput = task.find('.edit')
+    editInput.setValue('Hoge')
+    editInput.trigger('keyup.enter')
+    expect(wrapper.vm.todos[0].title).toBe('Hoge')
+  })
+
+  it('タスクを編集しても、タイトルが入力されていないと削除される', () => {
+    const store = createStore()
+    store.dispatch = jest.fn()
+    const wrapper = createWrapper({ store })
+    
+    let task = wrapper.findAll('li').at(0)
+    task.find('label').trigger('dbclick')
+    let editInput = task.find('.edit')
+    editInput.setValue('')
+    editInput.trigger('keyup.enter')
+    const expectedData = expect.objectContaining({
+      title: "",
+      completed: false
+    })
+    expect(store.dispatch).toHaveBeenCalledWith('removeTodo', expectedData)
+  })
+
+  it('編集をキャンセル', () => {
+    const store = createStore()
+    let wrapper = createWrapper({ store })
+    wrapper.vm.beforeEditCache = 'one'
+
+    let task = wrapper.findAll('li').at(0)
+    task.find('label').trigger('dbclick')
+    let editInput = task.find('.edit')
+    editInput.setValue('Hoge')
+    editInput.trigger('keyup.esc')
+    expect(wrapper.vm.todos[0].title).toBe('one')
   })
 })
