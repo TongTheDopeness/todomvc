@@ -78,6 +78,7 @@ export default {
       this.$store.dispatch('removeTodo', todo)
     },
     save () {
+      console.log("save()")
       this.$store.dispatch('saveTodos')
     }
   },
