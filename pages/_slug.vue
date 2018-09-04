@@ -3,7 +3,7 @@
     <todo-header/>
 		<section class="main" v-if="todos.length">
 			<input class="toggle" type="checkbox" @click="allDone">
-			<label for="toggle">Mark all as comple</label>
+			<label for="toggle">Mark all as complete</label>
 			<ul class="todo-list">
         <li v-for="todo in todos" :class="{'completed': todo.completed, 'editing': todo === editedTodo}">
           <div class="view">
