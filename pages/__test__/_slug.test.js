@@ -50,6 +50,12 @@ function createWrapper(overrides) {
 describe('_slug.vue', () => {
 
   describe('active', () => {
+
+    it('match snapshot', () => {
+      const wrapper = createWrapper()
+      expect(wrapper.element).toMatchSnapshot()
+    })
+
     it('todoリストはactiveなのが1つある', () => {
       const store = createStore()
       const mocks = {
@@ -64,6 +70,12 @@ describe('_slug.vue', () => {
   })
 
   describe('completed', () => {
+
+    it('match snapshot', () => {
+      const wrapper = createWrapper()
+      expect(wrapper.element).toMatchSnapshot()
+    })
+
     it('todoリストはcompletedなのが1つある', () => {
       const store = createStore()
       const mocks = {
@@ -79,6 +91,12 @@ describe('_slug.vue', () => {
   })
 
   describe('all', () => {
+
+    it('match snapshot', () => {
+      const wrapper = createWrapper()
+      expect(wrapper.element).toMatchSnapshot()
+    })
+
     it('render slug', () => {
       const store = createStore({})
       const wrapper = createWrapper({ store })

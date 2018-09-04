@@ -1,0 +1,241 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`_slug.vue active match snapshot 1`] = `
+<section
+  class="todoapp"
+>
+  <todoheader-stub />
+   
+  <section
+    class="main"
+  >
+    <input
+      class="toggle"
+      type="checkbox"
+    />
+     
+    <label
+      for="toggle"
+    >
+      Mark all as complete
+    </label>
+     
+    <ul
+      class="todo-list"
+    >
+      <li
+        class=""
+      >
+        <div
+          class="view"
+        >
+          <input
+            class="toggle"
+            type="checkbox"
+          />
+           
+          <label>
+            one
+          </label>
+           
+          <button
+            class="destroy"
+          />
+        </div>
+         
+        <input
+          class="edit"
+          type="text"
+        />
+      </li>
+      <li
+        class="completed"
+      >
+        <div
+          class="view"
+        >
+          <input
+            class="toggle"
+            type="checkbox"
+          />
+           
+          <label>
+            two
+          </label>
+           
+          <button
+            class="destroy"
+          />
+        </div>
+         
+        <input
+          class="edit"
+          type="text"
+        />
+      </li>
+    </ul>
+  </section>
+   
+  <todofooter-stub />
+</section>
+`;
+
+exports[`_slug.vue all match snapshot 1`] = `
+<section
+  class="todoapp"
+>
+  <todoheader-stub />
+   
+  <section
+    class="main"
+  >
+    <input
+      class="toggle"
+      type="checkbox"
+    />
+     
+    <label
+      for="toggle"
+    >
+      Mark all as complete
+    </label>
+     
+    <ul
+      class="todo-list"
+    >
+      <li
+        class=""
+      >
+        <div
+          class="view"
+        >
+          <input
+            class="toggle"
+            type="checkbox"
+          />
+           
+          <label>
+            one
+          </label>
+           
+          <button
+            class="destroy"
+          />
+        </div>
+         
+        <input
+          class="edit"
+          type="text"
+        />
+      </li>
+      <li
+        class="completed"
+      >
+        <div
+          class="view"
+        >
+          <input
+            class="toggle"
+            type="checkbox"
+          />
+           
+          <label>
+            two
+          </label>
+           
+          <button
+            class="destroy"
+          />
+        </div>
+         
+        <input
+          class="edit"
+          type="text"
+        />
+      </li>
+    </ul>
+  </section>
+   
+  <todofooter-stub />
+</section>
+`;
+
+exports[`_slug.vue completed match snapshot 1`] = `
+<section
+  class="todoapp"
+>
+  <todoheader-stub />
+   
+  <section
+    class="main"
+  >
+    <input
+      class="toggle"
+      type="checkbox"
+    />
+     
+    <label
+      for="toggle"
+    >
+      Mark all as complete
+    </label>
+     
+    <ul
+      class="todo-list"
+    >
+      <li
+        class=""
+      >
+        <div
+          class="view"
+        >
+          <input
+            class="toggle"
+            type="checkbox"
+          />
+           
+          <label>
+            one
+          </label>
+           
+          <button
+            class="destroy"
+          />
+        </div>
+         
+        <input
+          class="edit"
+          type="text"
+        />
+      </li>
+      <li
+        class="completed"
+      >
+        <div
+          class="view"
+        >
+          <input
+            class="toggle"
+            type="checkbox"
+          />
+           
+          <label>
+            two
+          </label>
+           
+          <button
+            class="destroy"
+          />
+        </div>
+         
+        <input
+          class="edit"
+          type="text"
+        />
+      </li>
+    </ul>
+  </section>
+   
+  <todofooter-stub />
+</section>
+`;
