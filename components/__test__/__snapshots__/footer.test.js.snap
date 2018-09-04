@@ -1,0 +1,48 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`footer.vue match snapshot 1`] = `
+<footer
+  class="footer"
+>
+  <span
+    class="todo-count"
+  >
+    <strong>
+      1
+    </strong>
+     item
+    <!---->
+     left
+  </span>
+   
+  <ul
+    class="filters"
+  >
+    <li>
+      <a>
+        All
+      </a>
+    </li>
+     
+    <li>
+      <a>
+        Active
+      </a>
+    </li>
+     
+    <li>
+      <a>
+        Completed
+      </a>
+    </li>
+  </ul>
+   
+  <button
+    class="clear-completed"
+  >
+    
+    Clear completed
+  
+  </button>
+</footer>
+`;

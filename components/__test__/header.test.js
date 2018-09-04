@@ -24,6 +24,11 @@ function createWrapper(overrides) {
 
 describe('header.vue', () => {
 
+  it('match snapshot', () => {
+    const wrapper = createWrapper()
+    expect(wrapper.element).toMatchSnapshot()
+  })
+
   it('テキストを入力し、エンターを押すとコンポーネントのaddTodoが呼び出される', () => {
     const wrapper = createWrapper()
     wrapper.vm.addTodo = jest.fn()

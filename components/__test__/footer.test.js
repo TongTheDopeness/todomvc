@@ -6,11 +6,22 @@ import merge from 'lodash.merge'
 const localVue = createLocalVue()
 localVue.use(Vuex)
 
+
+const todos = [
+  { title: 'one', completed: false },
+  { title: 'two', completed: true }
+]
+
+const activeTodos = [
+  { title: 'one', completed: false }    
+]
+
 function createStore(overrides) {
+
   const defaultStoreConfig = {
     getters: {
-      allTodos: jest.fn(),
-      activeTodos: jest.fn(),
+      allTodos: () => todos,
+      activeTodos: () => activeTodos,
     }
   }
   return new Vuex.Store(
@@ -33,43 +44,28 @@ function createWrapper(overrides) {
 
 
 describe('footer.vue', () => {
-  let storeOptions
-  let store
-  const todos = [
-    { title: 'one', completed: false },
-    { title: 'two', completed: true }
-  ]
 
-  const activeTodos = [
-    { title: 'one', completed: false }    
-  ]
+  it('match snapshot', () => {
+    const wrapper = createWrapper()
+    expect(wrapper.element).toMatchSnapshot()
+  })
 
   it('todoが2つ残っている', () => {
-    const store = createStore({
-      getters: {
-        allTodos: () => todos,
-        activeTodos: () => activeTodos
-      }
-    })
-
-    const wrapper = createWrapper({ store })
+    const wrapper = createWrapper()
     expect(wrapper.find('.todo-count').text()).toBe("1 item left")
   })
 
-  it('Clear completed ボタンを押すとsetTodosgがdispatchされる', () => {
-
-    const store = createStore({
-      getters: {
-        allTodos: () => todos,
-        activeTodos: () => activeTodos
-      }
-    })
-
+  it('Clear completed ボタンを押すとsetTodosgがdispatchされる', () => {
+    const store = createStore()
     store.dispatch = jest.fn()
       
     const wrapper = createWrapper({ store })
 
     wrapper.find('.clear-completed').trigger('click')
-    expect(store.dispatch).toHaveBeenCalledWith('setTodos', activeTodos)
+    const expectedData = expect.objectContaining([{
+      completed: false,
+      title: 'one'
+    }])
+    expect(store.dispatch).toHaveBeenCalledWith('setTodos', expectedData)
   })
 })
